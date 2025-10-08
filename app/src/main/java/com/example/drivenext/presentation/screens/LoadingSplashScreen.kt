@@ -46,6 +46,9 @@ fun LoadingSplashScreen(
             }
         } else {
             // TODO navigate to the main screen
+            navController.navigate(Route.GettingStartedScreen) {
+                popUpTo(Route.LoadingSplashScreen) {inclusive = true}
+            }
         }
     }
 

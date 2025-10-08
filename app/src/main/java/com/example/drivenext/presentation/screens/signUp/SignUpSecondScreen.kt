@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -15,11 +18,15 @@ import androidx.compose.ui.res.stringResource
 
 import com.example.drivenext.R
 import com.example.drivenext.ui.theme.DriveNextTheme
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 enum class Gender {
     Male, Female
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpSecondScreen(
     onNextButtonClick: () -> Unit,
@@ -28,14 +35,42 @@ fun SignUpSecondScreen(
     var surname by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var patronymic by remember { mutableStateOf("") }
-    var dateOfBirth by remember { mutableStateOf("") }
     var selectedGender by remember { mutableStateOf<Gender?>(null) }
+
+    // birth date field
+    val datePickerState = rememberDatePickerState()
+    var showDatePickerDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showDatePickerDialog) {
+        DatePickerDialog(
+            onDismissRequest = { showDatePickerDialog = false },
+            confirmButton = {
+                TextButton(onClick = { showDatePickerDialog = false }) {
+                    Text("ОК")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePickerDialog = false }) {
+                    Text("Отмена")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
+    }
+
+    val selectedDateMillis = datePickerState.selectedDateMillis
+    val formattedDate = remember(selectedDateMillis) {
+        if (selectedDateMillis != null) {
+            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            formatter.format(Date(selectedDateMillis))
+        } else ""
+    }
 
     Scaffold(
         topBar = {
             Row(
                 modifier = Modifier
-                    .padding(top = 50.dp)
                     .fillMaxWidth()
             ) {
                 IconButton(
@@ -130,13 +165,22 @@ fun SignUpSecondScreen(
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = dateOfBirth,
-                onValueChange = { dateOfBirth = it },
+                value = formattedDate,
+                onValueChange = {},
+                readOnly = true,
                 placeholder = { Text(stringResource(R.string.date_placeholder)) },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 24.dp),
+                leadingIcon = {
+                    IconButton(onClick = { showDatePickerDialog = true }) {
+                        Icon(
+                            painter = painterResource(R.drawable.calendar),
+                            contentDescription = null,
+                        )
+                    }
+                }
             )
 
             Text(

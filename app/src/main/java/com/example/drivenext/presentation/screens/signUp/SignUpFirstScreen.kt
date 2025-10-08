@@ -16,12 +16,14 @@ import com.example.drivenext.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable
 fun SignUpFirstScreen(
     onNextButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
+    viewModel: SignUpViewModel = viewModel()
 ) {
     var email by remember { mutableStateOf("") }
 
@@ -65,7 +67,8 @@ fun SignUpFirstScreen(
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = onNextButtonClick,
+                onClick = {viewModel.onFirstCountinueClick(onNextButtonClick)},
+                enabled = viewModel.isFirstFormValid,
             ) {
                 Text(
                     text = stringResource(R.string.countinue),
@@ -90,28 +93,39 @@ fun SignUpFirstScreen(
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = viewModel.email.value,
+                onValueChange = { viewModel.onEmailChanged(it) },
                 placeholder = { Text(stringResource(R.string.email_description)) },
+                isError = viewModel.emailError.value != null,
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 24.dp)
             )
+            viewModel.emailError.value?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
+            }
 
             Text(
                 text = stringResource(R.string.create_password),
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = viewModel.password.value,
+                onValueChange = { viewModel.onPasswordChanged(it) },
                 placeholder = { Text(stringResource(R.string.password_description)) },
+                isError = viewModel.passwordError.value != null,
                 singleLine = true,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp),
+                    .fillMaxWidth(),
+
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+
                 trailingIcon = {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(
@@ -121,19 +135,28 @@ fun SignUpFirstScreen(
                     }
                 }
             )
+            viewModel.passwordError.value?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
+            }
 
             Text(
                 text = stringResource(R.string.repeat_password),
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = repeatPassword,
-                onValueChange = { repeatPassword = it },
+                value = viewModel.repeatPassword.value,
+                onValueChange = { viewModel.onRepeatPasswordChanged(it) },
                 placeholder = { Text(stringResource(R.string.password_description)) },
+                isError = viewModel.repeatPasswordError.value != null,
                 singleLine = true,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp),
+                    .fillMaxWidth(),
                 visualTransformation = if (repeatPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = { repeatPasswordVisible = !repeatPasswordVisible }) {
@@ -144,16 +167,34 @@ fun SignUpFirstScreen(
                     }
                 }
             )
+            viewModel.repeatPasswordError.value?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
+            }
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Checkbox(
-                    checked = checked,
-                    onCheckedChange = { checked = it }
+                    checked = viewModel.termsAndConditionsChecked.value,
+                    onCheckedChange = { viewModel.onTermsAndConditionsChanged(it) }
                 )
                 Text(
                     text = stringResource(R.string.terms_and_conditions)
+                )
+            }
+            viewModel.termsAndConditionsCheckedError.value?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .padding(8.dp)
                 )
             }
         }
