@@ -39,7 +39,7 @@ fun LoadingSplashScreen(
 
         if (isFirstLaunch || token.isNullOrEmpty()) {
             navController.navigate(Route.GettingStartedScreen) {
-                popUpTo(Route.GettingStartedScreen) {inclusive = true}
+                popUpTo(Route.GettingStartedScreen) { inclusive = true }
             }
         } else {
 //            TODO load to the main screen
@@ -59,7 +59,7 @@ fun LoadingSplashScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(top = 40.dp)
+                .padding(top = 40.dp, start = 24.dp)
         ) {
             Text(
                 text = stringResource(R.string.app_name),

@@ -36,28 +36,28 @@ fun OnboardingScreen(
     val context = LocalContext.current
     val prefs = remember { AppPreferences(context) }
 
-    val pagerState = rememberPagerState (pageCount = { 3 })
+    val pagerState = rememberPagerState(pageCount = { 3 })
     val coroutineScope = rememberCoroutineScope()
 
-    val imageResources = listOf (
+    val imageResources = listOf(
         R.drawable.onboarding0,
         R.drawable.onboarding1,
         R.drawable.onboarding2,
     )
 
-    val titles = listOf (
+    val titles = listOf(
         stringResource(R.string.onboarding0_title),
         stringResource(R.string.onboarding1_title),
         stringResource(R.string.onboarding2_title),
     )
 
-    val descriptions = listOf (
+    val descriptions = listOf(
         stringResource(R.string.onboarding0_description),
         stringResource(R.string.onboarding1_description),
         stringResource(R.string.onboarding2_description),
     )
 
-    val buttonText = listOf (
+    val buttonText = listOf(
         stringResource(R.string.countinue),
         stringResource(R.string.countinue),
         stringResource(R.string.lets_go),
@@ -72,7 +72,7 @@ fun OnboardingScreen(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            TextButton (
+            TextButton(
                 onClick = {},
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -83,7 +83,7 @@ fun OnboardingScreen(
                 )
             }
 
-            Column (
+            Column(
                 modifier = Modifier
                     .align(Alignment.Center)
             ) {
@@ -95,7 +95,7 @@ fun OnboardingScreen(
                         .fillMaxWidth()
                 )
 
-                Column (
+                Column(
                     modifier = Modifier
                         .padding(30.dp)
                 ) {
@@ -120,13 +120,14 @@ fun OnboardingScreen(
                         .wrapContentHeight()
                         .padding(30.dp)
                 ) {
-                    Row (
+                    Row(
                         modifier = Modifier
                             .weight(1f)
                             .align(Alignment.CenterVertically)
                     ) {
                         repeat(pagerState.pageCount) { iteration ->
-                            val color = if (pagerState.currentPage == iteration) Color.Blue else Color.LightGray
+                            val color =
+                                if (pagerState.currentPage == iteration) Color.Blue else Color.LightGray
                             val width = if (pagerState.currentPage == iteration) 40.dp else 16.dp
 
                             Box(

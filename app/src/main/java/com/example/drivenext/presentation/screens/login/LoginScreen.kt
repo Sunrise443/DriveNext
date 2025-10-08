@@ -14,7 +14,6 @@ import com.example.drivenext.R
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.res.stringResource
-import com.example.drivenext.presentation.screens.login.LoginViewModel
 
 @Composable
 fun LoginScreen(
@@ -50,7 +49,7 @@ fun LoginScreen(
         )
 
         // Email
-        Column (
+        Column(
             modifier = Modifier.padding(bottom = 24.dp)
         ) {
             Text(text = stringResource(R.string.email), style = MaterialTheme.typography.bodyLarge)
@@ -74,7 +73,7 @@ fun LoginScreen(
             }
         }
 
-        Column (
+        Column(
             modifier = Modifier.padding(bottom = 24.dp)
         ) {
             Text(

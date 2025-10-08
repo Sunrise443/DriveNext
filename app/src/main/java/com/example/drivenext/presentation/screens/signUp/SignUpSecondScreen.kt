@@ -19,6 +19,7 @@ import com.example.drivenext.ui.theme.DriveNextTheme
 enum class Gender {
     Male, Female
 }
+
 @Composable
 fun SignUpSecondScreen(
     onNextButtonClick: () -> Unit,
@@ -30,7 +31,7 @@ fun SignUpSecondScreen(
     var dateOfBirth by remember { mutableStateOf("") }
     var selectedGender by remember { mutableStateOf<Gender?>(null) }
 
-    Scaffold (
+    Scaffold(
         topBar = {
             Row(
                 modifier = Modifier

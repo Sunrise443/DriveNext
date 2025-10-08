@@ -80,6 +80,6 @@ fun NoConnectionScreen(
 @Composable
 fun NoConnectionScreenPreview() {
     DriveNextTheme {
-        NoConnectionScreen( onTryAgainButtonClick = {} )
+        NoConnectionScreen(onTryAgainButtonClick = {})
     }
 }

@@ -33,7 +33,7 @@ fun SignUpFirstScreen(
 
     var checked by remember { mutableStateOf(false) }
 
-    Scaffold (
+    Scaffold(
         topBar = {
             Row(
                 modifier = Modifier

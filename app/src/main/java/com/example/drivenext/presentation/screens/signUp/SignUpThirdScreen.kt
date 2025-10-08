@@ -23,10 +23,10 @@ fun SignUpThirdScreen(
     onNextButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
 ) {
-    var drivers_license_number by remember { mutableStateOf("") }
-    var date_of_issue by remember { mutableStateOf("") }
+    var driversLicenseNumber by remember { mutableStateOf("") }
+    var dateOfIssue by remember { mutableStateOf("") }
 
-    Scaffold (
+    Scaffold(
         topBar = {
             Row(
                 modifier = Modifier
@@ -105,8 +105,8 @@ fun SignUpThirdScreen(
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = drivers_license_number,
-                onValueChange = { drivers_license_number = it },
+                value = driversLicenseNumber,
+                onValueChange = { driversLicenseNumber = it },
                 placeholder = { Text(stringResource(R.string.drivers_license_number_placeholder)) },
                 singleLine = true,
                 modifier = Modifier
@@ -119,8 +119,8 @@ fun SignUpThirdScreen(
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = date_of_issue,
-                onValueChange = { date_of_issue = it },
+                value = dateOfIssue,
+                onValueChange = { dateOfIssue = it },
                 placeholder = { Text(stringResource(R.string.date_placeholder)) },
                 singleLine = true,
                 modifier = Modifier
@@ -132,7 +132,7 @@ fun SignUpThirdScreen(
                 text = stringResource(R.string.drivers_license_photo),
                 style = MaterialTheme.typography.bodyLarge,
             )
-            Row (
+            Row(
                 modifier = Modifier
                     .padding(top = 8.dp, bottom = 16.dp)
             ) {
@@ -154,7 +154,7 @@ fun SignUpThirdScreen(
                 text = stringResource(R.string.passport_photo),
                 style = MaterialTheme.typography.bodyLarge,
             )
-            Row (
+            Row(
                 modifier = Modifier
                     .padding(top = 8.dp)
             ) {

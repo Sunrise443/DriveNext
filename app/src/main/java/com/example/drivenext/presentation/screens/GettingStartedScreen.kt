@@ -51,7 +51,7 @@ fun GettingStartedScreen(
                 .align(Alignment.Center)
         )
 
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = 50.dp, start = 8.dp),

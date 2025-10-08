@@ -20,16 +20,16 @@ import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable
 fun SignUpFourthScreen() {
-    Scaffold (
+    Scaffold(
         topBar = {
-                Text(
-                    text = stringResource(R.string.enjoy),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier
-                        .padding(top = 50.dp)
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
+            Text(
+                text = stringResource(R.string.enjoy),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier
+                    .padding(top = 50.dp)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
         },
 
         bottomBar = {
