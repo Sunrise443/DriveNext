@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import com.example.drivenext.R
@@ -20,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.example.drivenext.core.AppPreferences
 import com.example.drivenext.core.Route
-import com.example.drivenext.ui.theme.DriveNextTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 
@@ -37,21 +35,20 @@ fun LoadingSplashScreen(
         val isFirstLaunch = prefs.isFirstLaunch.first()
         val token = prefs.token.first()
 
-        if (isFirstLaunch || token.isNullOrEmpty()) {
+        if (isFirstLaunch) {
+            prefs.setFirstLaunchDone()
+            navController.navigate(Route.OnboardingScreen) {
+                popUpTo(Route.LoadingSplashScreen) { inclusive = true }
+            }
+        } else if (!token.isNullOrEmpty()) {
             navController.navigate(Route.GettingStartedScreen) {
-                popUpTo(Route.GettingStartedScreen) { inclusive = true }
+                popUpTo(Route.LoadingSplashScreen) {inclusive = true}
             }
         } else {
-//            TODO load to the main screen
-//            navController.navigate(Route.) {
-//                popUpTo(Route.) {inclusive = true}
-//            }
+            // TODO navigate to the main screen
         }
-
-//        if (isFirstLaunch) {
-//            prefs.setFirstLaunchDone()
-//        }
     }
+
     Box(
         modifier = Modifier
             .fillMaxSize()

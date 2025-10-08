@@ -41,15 +41,4 @@ class AppPreferences(private val context: Context) {
             prefs.remove(TOKEN)
         }
     }
-
-    val isOnboardingCompleted: Flow<Boolean> = context.dataStore.data
-        .map { preferences ->
-            preferences[ONBOARDING_COMPLETED_KEY] ?: false
-        }
-
-    suspend fun setOnboardingCompleted() {
-        context.dataStore.edit { preferences ->
-            preferences[ONBOARDING_COMPLETED_KEY] = true
-        }
-    }
 }

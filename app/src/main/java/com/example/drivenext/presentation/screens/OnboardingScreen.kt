@@ -11,31 +11,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
 import com.example.drivenext.R
 import androidx.compose.ui.res.stringResource
-import com.example.drivenext.core.AppPreferences
 import com.example.drivenext.ui.theme.DriveNextTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun OnboardingScreen(
     onLetsGoButtonClick: () -> Unit,
+    onSkipButtonClick: () -> Unit
 ) {
-    val context = LocalContext.current
-    val prefs = remember { AppPreferences(context) }
-
     val pagerState = rememberPagerState(pageCount = { 3 })
     val coroutineScope = rememberCoroutineScope()
 
@@ -73,7 +67,9 @@ fun OnboardingScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             TextButton(
-                onClick = {},
+                onClick = {
+                    onSkipButtonClick()
+                },
                 modifier = Modifier
                     .align(Alignment.TopEnd)
             ) {
@@ -93,6 +89,7 @@ fun OnboardingScreen(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(307.dp)
                 )
 
                 Column(
@@ -150,10 +147,7 @@ fun OnboardingScreen(
                                     pagerState.animateScrollToPage(pagerState.currentPage + 1)
                                 }
                             } else {
-                                coroutineScope.launch {
-                                    prefs.setOnboardingCompleted()
-                                    onLetsGoButtonClick()
-                                }
+                                onLetsGoButtonClick()
                             }
                         },
                         shape = RoundedCornerShape(8.dp),
@@ -173,7 +167,8 @@ fun OnboardingScreen(
 fun OnboardingScreenPreview() {
     DriveNextTheme {
         OnboardingScreen(
-            onLetsGoButtonClick = {}
+            onLetsGoButtonClick = {},
+            onSkipButtonClick = {}
         )
     }
 }
