@@ -69,7 +69,10 @@ fun NoConnectionScreen(
                     )
                 }
             }
-        }
+        },
+
+        modifier = Modifier
+            .systemBarsPadding()
     )
 }
 

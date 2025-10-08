@@ -66,7 +66,10 @@ fun SignUpThirdScreen(
                     textAlign = TextAlign.Center,
                 )
             }
-        }
+        },
+
+        modifier = Modifier
+            .systemBarsPadding()
     ) { paddingValues ->
         Column(
             modifier = Modifier

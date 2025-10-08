@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                     composable<Route.LoginScreen> {
                         LoginScreen(
                             onSignUpButtonClick = { navController.navigate(Route.SignUpFirstScreen) },
-                            onLoginCLick = { navController.navigate(Route.OnboardingScreen) }
+                            onLoginClick = { navController.navigate(Route.OnboardingScreen) },
                         )
                     }
 

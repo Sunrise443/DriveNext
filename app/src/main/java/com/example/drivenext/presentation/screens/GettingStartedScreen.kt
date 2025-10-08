@@ -26,7 +26,7 @@ fun GettingStartedScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp, 8.dp),
+            .systemBarsPadding(),
     ) {
         Column(
             modifier = Modifier

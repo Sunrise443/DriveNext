@@ -67,6 +67,7 @@ fun OnboardingScreen(
         state = pagerState,
         modifier = Modifier
             .fillMaxSize()
+            .systemBarsPadding()
     ) { page ->
         Box(
             modifier = Modifier.fillMaxSize()
@@ -162,8 +163,6 @@ fun OnboardingScreen(
                     }
                 }
             }
-
-
         }
     }
 }
