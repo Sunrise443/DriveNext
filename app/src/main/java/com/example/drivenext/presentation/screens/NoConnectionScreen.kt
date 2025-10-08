@@ -17,7 +17,9 @@ import androidx.compose.ui.res.stringResource
 import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable
-fun NoConnectionScreen() {
+fun NoConnectionScreen(
+    onTryAgainButtonClick: () -> Unit
+) {
     Scaffold(
         content = { paddingValues ->
             Column(
@@ -58,7 +60,7 @@ fun NoConnectionScreen() {
                         .fillMaxWidth()
                         .padding(8.dp, 16.dp),
                     shape = RoundedCornerShape(8.dp),
-                    onClick = {},
+                    onClick = onTryAgainButtonClick,
                 ) {
                     Text(
                         text = stringResource(R.string.retry),
@@ -75,6 +77,6 @@ fun NoConnectionScreen() {
 @Composable
 fun NoConnectionScreenPreview() {
     DriveNextTheme {
-        NoConnectionScreen()
+        NoConnectionScreen( onTryAgainButtonClick = {} )
     }
 }

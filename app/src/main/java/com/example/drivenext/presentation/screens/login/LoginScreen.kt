@@ -1,4 +1,4 @@
-package com.example.drivenext.presentation.screens
+package com.example.drivenext.presentation.screens.login
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +19,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onSignUpButtonClick: () -> Unit,
+    onLoginCLick: () -> Unit,
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -101,7 +104,7 @@ fun LoginScreen() {
                 .padding(bottom = 8.dp)
                 .height(52.dp),
             shape = RoundedCornerShape(8.dp),
-            onClick = {},
+            onClick = onLoginCLick,
         ) {
             Text(
                 text = stringResource(R.string.log_in),
@@ -131,7 +134,7 @@ fun LoginScreen() {
         }
 
         TextButton(
-            onClick = {},
+            onClick = onSignUpButtonClick,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
         ) {
@@ -146,6 +149,9 @@ fun LoginScreen() {
 @Composable
 fun LoginScreenScreenPreview() {
     DriveNextTheme {
-        LoginScreen()
+        LoginScreen(
+            onSignUpButtonClick = {},
+            onLoginCLick = {}
+        )
     }
 }

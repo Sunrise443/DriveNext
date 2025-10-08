@@ -1,7 +1,6 @@
-package com.example.drivenext.presentation.screens.sign_up
+package com.example.drivenext.presentation.screens.signUp
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,8 +16,6 @@ import androidx.compose.ui.unit.dp
 
 import com.example.drivenext.R
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable

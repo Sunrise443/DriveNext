@@ -19,7 +19,10 @@ import androidx.compose.ui.res.stringResource
 import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable
-fun GettingStartedScreen() {
+fun GettingStartedScreen(
+    onLogInButtonClick: () -> Unit,
+    onSignUpButtonClick: () -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +63,7 @@ fun GettingStartedScreen() {
                     .padding(bottom = 8.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = {},
+                onClick = onLogInButtonClick,
             ) {
                 Text(
                     text = stringResource(R.string.log_in),
@@ -74,7 +77,7 @@ fun GettingStartedScreen() {
                     .fillMaxWidth()
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = {},
+                onClick = onSignUpButtonClick,
             ) {
                 Text(
                     text = stringResource(R.string.sign_in),
@@ -90,6 +93,9 @@ fun GettingStartedScreen() {
 @Composable
 fun GettingStartedScreenPreview() {
     DriveNextTheme {
-        GettingStartedScreen()
+        GettingStartedScreen(
+            onLogInButtonClick = {},
+            onSignUpButtonClick = {}
+        )
     }
 }

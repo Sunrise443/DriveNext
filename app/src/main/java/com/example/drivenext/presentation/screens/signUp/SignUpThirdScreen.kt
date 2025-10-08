@@ -1,4 +1,4 @@
-package com.example.drivenext.presentation.screens.sign_up
+package com.example.drivenext.presentation.screens.signUp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -19,7 +19,10 @@ import com.example.drivenext.R
 import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable
-fun SignUpThirdScreen() {
+fun SignUpThirdScreen(
+    onNextButtonClick: () -> Unit,
+    onBackButtonClick: () -> Unit,
+) {
     var drivers_license_number by remember { mutableStateOf("") }
     var date_of_issue by remember { mutableStateOf("") }
 
@@ -55,7 +58,7 @@ fun SignUpThirdScreen() {
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = {},
+                onClick = onNextButtonClick,
             ) {
                 Text(
                     text = stringResource(R.string.countinue),
@@ -74,7 +77,7 @@ fun SignUpThirdScreen() {
         ) {
 
             IconButton(
-                onClick = {},
+                onClick = onBackButtonClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .size(128.dp)
@@ -174,6 +177,9 @@ fun SignUpThirdScreen() {
 @Composable
 fun SignUpThirdScreenPreview() {
     DriveNextTheme {
-        SignUpThirdScreen()
+        SignUpThirdScreen(
+            onNextButtonClick = {},
+            onBackButtonClick = {},
+        )
     }
 }

@@ -11,22 +11,33 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import com.example.drivenext.R
 import androidx.compose.ui.res.stringResource
+import com.example.drivenext.core.AppPreferences
 import com.example.drivenext.ui.theme.DriveNextTheme
+import kotlinx.coroutines.launch
 
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(
+    onLetsGoButtonClick: () -> Unit,
+) {
+    val context = LocalContext.current
+    val prefs = remember { AppPreferences(context) }
+
     val pagerState = rememberPagerState (pageCount = { 3 })
+    val coroutineScope = rememberCoroutineScope()
 
     val imageResources = listOf (
         R.drawable.onboarding0,
@@ -131,7 +142,18 @@ fun OnboardingScreen() {
 
 
                     Button(
-                        onClick = {},
+                        onClick = {
+                            if (pagerState.currentPage < pagerState.pageCount - 1) {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                                }
+                            } else {
+                                coroutineScope.launch {
+                                    prefs.setOnboardingCompleted()
+                                    onLetsGoButtonClick()
+                                }
+                            }
+                        },
                         shape = RoundedCornerShape(8.dp),
                     ) {
                         Text(
@@ -150,6 +172,8 @@ fun OnboardingScreen() {
 @Composable
 fun OnboardingScreenPreview() {
     DriveNextTheme {
-        OnboardingScreen()
+        OnboardingScreen(
+            onLetsGoButtonClick = {}
+        )
     }
 }

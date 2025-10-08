@@ -1,4 +1,4 @@
-package com.example.drivenext.presentation.screens.sign_up
+package com.example.drivenext.presentation.screens.signUp
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -11,21 +11,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.res.stringResource
 
 import com.example.drivenext.R
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import com.example.drivenext.ui.theme.DriveNextTheme
 
-enum class Gender {
-    Male, Female
-}
 @Composable
-fun SignUpSecondScreen() {
-    var surname by remember { mutableStateOf("") }
-    var name by remember { mutableStateOf("") }
-    var patronymic by remember { mutableStateOf("") }
-    var dateOfBirth by remember { mutableStateOf("") }
-    var selectedGender by remember { mutableStateOf<Gender?>(null) }
+fun SignUpFirstScreen(
+    onNextButtonClick: () -> Unit,
+    onBackButtonClick: () -> Unit,
+) {
+    var email by remember { mutableStateOf("") }
+
+    var password by remember { mutableStateOf("") }
+    var repeatPassword by remember { mutableStateOf("") }
+
+    var passwordVisible by remember { mutableStateOf(false) }
+    var repeatPasswordVisible by remember { mutableStateOf(false) }
+
+    var checked by remember { mutableStateOf(false) }
 
     Scaffold (
         topBar = {
@@ -35,7 +41,7 @@ fun SignUpSecondScreen() {
                     .fillMaxWidth()
             ) {
                 IconButton(
-                    onClick = {}
+                    onClick = onBackButtonClick
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.back_button),
@@ -59,7 +65,7 @@ fun SignUpSecondScreen() {
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = {},
+                onClick = onNextButtonClick,
             ) {
                 Text(
                     text = stringResource(R.string.countinue),
@@ -77,13 +83,13 @@ fun SignUpSecondScreen() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(R.string.surname),
+                text = stringResource(R.string.email),
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = surname,
-                onValueChange = { surname = it },
-                placeholder = { Text(stringResource(R.string.surname_placeholder)) },
+                value = email,
+                onValueChange = { email = it },
+                placeholder = { Text(stringResource(R.string.email_description)) },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -91,69 +97,60 @@ fun SignUpSecondScreen() {
             )
 
             Text(
-                text = stringResource(R.string.name),
+                text = stringResource(R.string.create_password),
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                placeholder = { Text(stringResource(R.string.name_placeholder)) },
+                value = password,
+                onValueChange = { password = it },
+                placeholder = { Text(stringResource(R.string.password_description)) },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 24.dp),
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(
+                            painter = painterResource(R.drawable.password_visibility_off),
+                            contentDescription = null,
+                        )
+                    }
+                }
             )
 
             Text(
-                text = stringResource(R.string.patronymic),
+                text = stringResource(R.string.repeat_password),
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = patronymic,
-                onValueChange = { patronymic = it },
-                placeholder = { Text(stringResource(R.string.patronymic_placeholder)) },
+                value = repeatPassword,
+                onValueChange = { repeatPassword = it },
+                placeholder = { Text(stringResource(R.string.password_description)) },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 24.dp),
+                visualTransformation = if (repeatPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { repeatPasswordVisible = !repeatPasswordVisible }) {
+                        Icon(
+                            painter = painterResource(R.drawable.password_visibility_off),
+                            contentDescription = null,
+                        )
+                    }
+                }
             )
 
-            Text(
-                text = stringResource(R.string.date_of_birth),
-                style = MaterialTheme.typography.bodyLarge,
-            )
-            OutlinedTextField(
-                value = dateOfBirth,
-                onValueChange = { dateOfBirth = it },
-                placeholder = { Text(stringResource(R.string.date_placeholder)) },
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp),
-            )
-
-            Text(
-                text = stringResource(R.string.sex),
-                style = MaterialTheme.typography.bodyLarge,
-            )
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                RadioButton(
-                    selected = selectedGender == Gender.Male,
-                    onClick = { selectedGender = Gender.Male }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Checkbox(
+                    checked = checked,
+                    onCheckedChange = { checked = it }
                 )
                 Text(
-                    text = stringResource(R.string.male),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-
-                RadioButton(
-                    selected = selectedGender == Gender.Female,
-                    onClick = { selectedGender = Gender.Female }
-                )
-                Text(
-                    text = stringResource(R.string.female),
-                    style = MaterialTheme.typography.bodyLarge,
+                    text = stringResource(R.string.terms_and_conditions)
                 )
             }
         }
@@ -163,8 +160,11 @@ fun SignUpSecondScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun SignUpSecondScreenPreview() {
+fun SignUpFirstScreenPreview() {
     DriveNextTheme {
-        SignUpSecondScreen()
+        SignUpFirstScreen(
+            onNextButtonClick = {},
+            onBackButtonClick = {},
+        )
     }
 }
