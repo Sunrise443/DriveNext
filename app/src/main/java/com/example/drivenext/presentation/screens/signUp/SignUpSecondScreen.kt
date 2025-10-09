@@ -34,7 +34,6 @@ fun SignUpSecondScreen(
     viewModel: SignUpViewModel = viewModel()
 ) {
     var patronymic by remember { mutableStateOf("") }
-    var selectedGender by remember { mutableStateOf<Gender?>(null) }
 
     // birth date field
     val datePickerState = rememberDatePickerState()
@@ -44,7 +43,10 @@ fun SignUpSecondScreen(
         DatePickerDialog(
             onDismissRequest = { showDatePickerDialog = false },
             confirmButton = {
-                TextButton(onClick = { showDatePickerDialog = false }) {
+                TextButton(onClick = {
+                    viewModel.onDateChanged(datePickerState.selectedDateMillis)
+                    showDatePickerDialog = false
+                }) {
                     Text("ОК")
                 }
             },
@@ -58,12 +60,14 @@ fun SignUpSecondScreen(
         }
     }
 
-    val selectedDateMillis = datePickerState.selectedDateMillis
-    val formattedDate = remember(selectedDateMillis) {
-        if (selectedDateMillis != null) {
-            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            formatter.format(Date(selectedDateMillis))
-        } else ""
+    val formattedDate: String = remember(viewModel.selectedDateMillis.value) {
+        val millis = viewModel.selectedDateMillis.value
+        if (millis != null) {
+            val date = Date(millis)
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+        } else {
+            ""
+        }
     }
 
     Scaffold(
@@ -97,7 +101,7 @@ fun SignUpSecondScreen(
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = { viewModel.onSecondCountinueClick(onNextButtonClick) },
+                onClick = { viewModel.onSecondContinueClick(onNextButtonClick) },
                 enabled = viewModel.isSecondFormValid,
             ) {
                 Text(
@@ -187,10 +191,10 @@ fun SignUpSecondScreen(
                 onValueChange = {},
                 readOnly = true,
                 placeholder = { Text(stringResource(R.string.date_placeholder)) },
+                isError = viewModel.selectedDateError.value != null,
                 singleLine = true,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp),
+                    .fillMaxWidth(),
                 leadingIcon = {
                     IconButton(onClick = { showDatePickerDialog = true }) {
                         Icon(
@@ -200,6 +204,15 @@ fun SignUpSecondScreen(
                     }
                 }
             )
+            viewModel.selectedDateError.value?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
+            }
 
             Text(
                 text = stringResource(R.string.sex),
