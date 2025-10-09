@@ -1,4 +1,4 @@
-package com.example.drivenext.presentation.screens.signUp
+package com.example.drivenext.presentation.screens.signUp.fourth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

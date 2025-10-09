@@ -1,4 +1,4 @@
-package com.example.drivenext.presentation.screens.signUp
+package com.example.drivenext.presentation.screens.signUp.third
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 import com.example.drivenext.R
 import com.example.drivenext.ui.theme.DriveNextTheme
@@ -27,10 +28,8 @@ import java.util.Locale
 fun SignUpThirdScreen(
     onNextButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
+    viewModel: SignUpThirdViewModel = viewModel()
 ) {
-    var driversLicenseNumber by remember { mutableStateOf("") }
-
-
     // date of issue field
     val datePickerState = rememberDatePickerState()
     var showDatePickerDialog by rememberSaveable { mutableStateOf(false) }
@@ -93,6 +92,7 @@ fun SignUpThirdScreen(
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
+                enabled = viewModel.isThirdFormValid,
                 onClick = onNextButtonClick,
             ) {
                 Text(
@@ -140,14 +140,23 @@ fun SignUpThirdScreen(
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = driversLicenseNumber,
-                onValueChange = { driversLicenseNumber = it },
+                value = viewModel.driversLicenseNumber.value,
+                onValueChange = { viewModel.onDriversLicenseNumberChange(it) },
                 placeholder = { Text(stringResource(R.string.drivers_license_number_placeholder)) },
+                isError = viewModel.driversLicenseNumberError.value != null,
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 24.dp)
             )
+            viewModel.driversLicenseNumberError.value?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
+            }
 
             Text(
                 text = stringResource(R.string.date_of_issue),

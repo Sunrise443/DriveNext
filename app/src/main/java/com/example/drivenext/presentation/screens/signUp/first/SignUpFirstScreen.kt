@@ -1,4 +1,4 @@
-package com.example.drivenext.presentation.screens.signUp
+package com.example.drivenext.presentation.screens.signUp.first
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +23,7 @@ import com.example.drivenext.ui.theme.DriveNextTheme
 fun SignUpFirstScreen(
     onNextButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
-    viewModel: SignUpViewModel = viewModel()
+    viewModel: SignUpFirstViewModel = viewModel()
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
     var repeatPasswordVisible by remember { mutableStateOf(false) }
@@ -60,7 +60,7 @@ fun SignUpFirstScreen(
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = {viewModel.onFirstCountinueClick(onNextButtonClick)},
+                onClick = {viewModel.onFirstContinueClick(onNextButtonClick)},
                 enabled = viewModel.isFirstFormValid,
             ) {
                 Text(

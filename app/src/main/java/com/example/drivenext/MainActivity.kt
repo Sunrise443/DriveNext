@@ -12,7 +12,10 @@ import com.example.drivenext.ui.theme.DriveNextTheme
 import com.example.drivenext.core.Route
 import com.example.drivenext.presentation.screens.*
 import com.example.drivenext.presentation.screens.login.LoginScreen
-import com.example.drivenext.presentation.screens.signUp.*
+import com.example.drivenext.presentation.screens.signUp.first.SignUpFirstScreen
+import com.example.drivenext.presentation.screens.signUp.fourth.SignUpFourthScreen
+import com.example.drivenext.presentation.screens.signUp.second.SignUpSecondScreen
+import com.example.drivenext.presentation.screens.signUp.third.SignUpThirdScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

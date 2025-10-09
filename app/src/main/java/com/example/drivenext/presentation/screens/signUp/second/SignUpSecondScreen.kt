@@ -1,4 +1,4 @@
-package com.example.drivenext.presentation.screens.signUp
+package com.example.drivenext.presentation.screens.signUp.second
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +31,7 @@ enum class Gender {
 fun SignUpSecondScreen(
     onNextButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
-    viewModel: SignUpViewModel = viewModel()
+    viewModel: SignUpSecondViewModel = viewModel()
 ) {
     var patronymic by remember { mutableStateOf("") }
 
