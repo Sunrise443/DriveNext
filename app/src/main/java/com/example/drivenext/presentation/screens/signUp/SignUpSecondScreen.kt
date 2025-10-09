@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.drivenext.R
 import com.example.drivenext.ui.theme.DriveNextTheme
 import java.text.SimpleDateFormat
@@ -31,9 +31,8 @@ enum class Gender {
 fun SignUpSecondScreen(
     onNextButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
+    viewModel: SignUpViewModel = viewModel()
 ) {
-    var surname by remember { mutableStateOf("") }
-    var name by remember { mutableStateOf("") }
     var patronymic by remember { mutableStateOf("") }
     var selectedGender by remember { mutableStateOf<Gender?>(null) }
 
@@ -98,7 +97,8 @@ fun SignUpSecondScreen(
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = onNextButtonClick,
+                onClick = { viewModel.onSecondCountinueClick(onNextButtonClick) },
+                enabled = viewModel.isSecondFormValid,
             ) {
                 Text(
                     text = stringResource(R.string.countinue),
@@ -123,28 +123,46 @@ fun SignUpSecondScreen(
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = surname,
-                onValueChange = { surname = it },
+                value = viewModel.surname.value,
+                onValueChange = { viewModel.onSurnameChanged(it) },
                 placeholder = { Text(stringResource(R.string.surname_placeholder)) },
+                isError = viewModel.surnameError.value != null,
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 24.dp)
             )
+            viewModel.surnameError.value?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
+            }
 
             Text(
                 text = stringResource(R.string.name),
                 style = MaterialTheme.typography.bodyLarge,
             )
             OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
+                value = viewModel.name.value,
+                onValueChange = { viewModel.onNameChanged(it) },
                 placeholder = { Text(stringResource(R.string.name_placeholder)) },
+                isError = viewModel.nameError.value != null,
                 singleLine = true,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp),
+                    .fillMaxWidth(),
             )
+            viewModel.nameError.value?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
+            }
 
             Text(
                 text = stringResource(R.string.patronymic),
@@ -190,8 +208,8 @@ fun SignUpSecondScreen(
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(
-                    selected = selectedGender == Gender.Male,
-                    onClick = { selectedGender = Gender.Male }
+                    selected = viewModel.gender.value == Gender.Male,
+                    onClick = { viewModel.onGenderChanged(Gender.Male) }
                 )
                 Text(
                     text = stringResource(R.string.male),
@@ -199,8 +217,8 @@ fun SignUpSecondScreen(
                 )
 
                 RadioButton(
-                    selected = selectedGender == Gender.Female,
-                    onClick = { selectedGender = Gender.Female }
+                    selected = viewModel.gender.value == Gender.Female,
+                    onClick = { viewModel.onGenderChanged(Gender.Female) }
                 )
                 Text(
                     text = stringResource(R.string.female),

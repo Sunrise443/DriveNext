@@ -75,5 +75,45 @@ class SignUpViewModel : ViewModel() {
     }
 
     // 2nd form
+    var surname = mutableStateOf("")
+    var name = mutableStateOf("")
+    var gender = mutableStateOf<Gender?>(null)
 
+    var surnameError = mutableStateOf<String?>(null)
+    var nameError = mutableStateOf<String?>(null)
+
+    val isSecondFormValid: Boolean
+        get() = surnameError.value == null &&
+                nameError.value == null &&
+                gender.value != null &&
+                surname.value.isNotBlank() &&
+                name.value.isNotBlank()
+
+    fun onSurnameChanged(newSurnameValue: String) {
+        surname.value = newSurnameValue
+        surnameError.value = validateSurname(newSurnameValue)
+    }
+    fun onNameChanged(newNameValue: String) {
+        name.value = newNameValue
+        nameError.value = validateName(newNameValue)
+    }
+    fun onGenderChanged(newGenderValue: Gender) {
+        gender.value = newGenderValue
+    }
+
+    fun validateSurname(value: String): String? {
+        return if (value.isBlank()) "Введите фамилию" else null
+    }
+    fun validateName(value: String): String? {
+        return if (value.isBlank()) "Введите имя" else null
+    }
+
+    fun onSecondCountinueClick(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            if (isFirstFormValid) {
+                // TODO server request
+                onSuccess()
+            }
+        }
+    }
 }

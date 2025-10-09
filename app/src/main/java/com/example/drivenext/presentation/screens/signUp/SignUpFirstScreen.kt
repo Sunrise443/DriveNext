@@ -25,15 +25,8 @@ fun SignUpFirstScreen(
     onBackButtonClick: () -> Unit,
     viewModel: SignUpViewModel = viewModel()
 ) {
-    var email by remember { mutableStateOf("") }
-
-    var password by remember { mutableStateOf("") }
-    var repeatPassword by remember { mutableStateOf("") }
-
     var passwordVisible by remember { mutableStateOf(false) }
     var repeatPasswordVisible by remember { mutableStateOf(false) }
-
-    var checked by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
