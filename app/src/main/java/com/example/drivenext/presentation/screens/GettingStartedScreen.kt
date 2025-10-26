@@ -30,7 +30,7 @@ fun GettingStartedScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(top = 40.dp)
+                .padding(top = 40.dp, start = 24.dp)
         ) {
             Text(
                 text = stringResource(R.string.app_name),
@@ -54,7 +54,7 @@ fun GettingStartedScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 50.dp, start = 8.dp),
+                .padding(bottom = 50.dp, start = 8.dp, end = 8.dp),
             verticalArrangement = Arrangement.Bottom
         ) {
             Button(

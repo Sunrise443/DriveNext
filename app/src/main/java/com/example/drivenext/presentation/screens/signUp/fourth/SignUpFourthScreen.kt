@@ -19,7 +19,9 @@ import androidx.compose.ui.res.stringResource
 import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable
-fun SignUpFourthScreen() {
+fun SignUpFourthScreen(
+    onNextButtonClick: () -> Unit = {}
+) {
     Scaffold(
         topBar = {
             Text(
@@ -39,7 +41,7 @@ fun SignUpFourthScreen() {
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = {},
+                onClick = onNextButtonClick,
             ) {
                 Text(
                     text = stringResource(R.string.countinue),

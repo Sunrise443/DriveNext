@@ -88,7 +88,9 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable<Route.SignUpFourthScreen> {
-                        SignUpFourthScreen()
+                        SignUpFourthScreen(
+                            onNextButtonClick = { navController.navigate(Route.OnboardingScreen) }
+                        )
                     }
                 }
             }

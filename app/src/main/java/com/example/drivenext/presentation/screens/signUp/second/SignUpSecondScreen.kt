@@ -148,6 +148,8 @@ fun SignUpSecondScreen(
             Text(
                 text = stringResource(R.string.name),
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(top = 16.dp)
             )
             OutlinedTextField(
                 value = viewModel.name.value,
@@ -171,6 +173,8 @@ fun SignUpSecondScreen(
             Text(
                 text = stringResource(R.string.patronymic),
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(top = 16.dp)
             )
             OutlinedTextField(
                 value = patronymic,
@@ -178,13 +182,14 @@ fun SignUpSecondScreen(
                 placeholder = { Text(stringResource(R.string.patronymic_placeholder)) },
                 singleLine = true,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp),
+                    .fillMaxWidth(),
             )
 
             Text(
                 text = stringResource(R.string.date_of_birth),
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(top = 16.dp)
             )
             OutlinedTextField(
                 value = formattedDate,
@@ -217,8 +222,9 @@ fun SignUpSecondScreen(
             Text(
                 text = stringResource(R.string.sex),
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(top = 16.dp)
             )
-
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(
                     selected = viewModel.gender.value == Gender.Male,

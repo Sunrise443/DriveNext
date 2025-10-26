@@ -107,6 +107,8 @@ fun SignUpFirstScreen(
             Text(
                 text = stringResource(R.string.create_password),
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(top = 16.dp)
             )
             OutlinedTextField(
                 value = viewModel.password.value,
@@ -141,6 +143,8 @@ fun SignUpFirstScreen(
             Text(
                 text = stringResource(R.string.repeat_password),
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(top = 16.dp)
             )
             OutlinedTextField(
                 value = viewModel.repeatPassword.value,
@@ -172,6 +176,8 @@ fun SignUpFirstScreen(
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(top = 16.dp)
             ) {
                 Checkbox(
                     checked = viewModel.termsAndConditionsChecked.value,

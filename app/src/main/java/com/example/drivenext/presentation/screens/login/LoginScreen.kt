@@ -1,11 +1,13 @@
 package com.example.drivenext.presentation.screens.login
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -14,6 +16,7 @@ import com.example.drivenext.R
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun LoginScreen(
@@ -142,24 +145,35 @@ fun LoginScreen(
 
         // Google Login
         Button(
+            onClick = { /* TODO */ },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),
-            shape = RoundedCornerShape(8.dp),
-            onClick = {},
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White,
+                contentColor = Color.Black
+            ),
+            border = BorderStroke(1.dp, Color(0xFFDADCE0)),
+            elevation = ButtonDefaults.buttonElevation(0.dp)
         ) {
             Icon(
                 painter = painterResource(R.drawable.google_icon),
                 contentDescription = null,
+                tint = Color.Unspecified,
                 modifier = Modifier
-                    .padding(end = 16.dp)
+                    .size(24.dp)
+                    .padding(end = 8.dp)
             )
             Text(
                 text = stringResource(R.string.google_log_in),
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
+                )
             )
         }
+
 
         // Sign Up Button
         TextButton(

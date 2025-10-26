@@ -1,5 +1,6 @@
 package com.example.drivenext.presentation.screens.signUp.third
 
+import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import java.util.Calendar
@@ -8,12 +9,20 @@ import java.util.Date
 class SignUpThirdViewModel : ViewModel() {
     var driversLicenseNumber = mutableStateOf("")
     var selectedDateMillis = mutableStateOf<Long?>(null)
+    var selectedProfileImageUri = mutableStateOf<Uri?>(null)
+    var selectedPassportImageUri = mutableStateOf<Uri?>(null)
+    var selectedDriverLicenseImageUri = mutableStateOf<Uri?>(null)
 
     var driversLicenseNumberError = mutableStateOf<String?>(null)
     var selectedDateError = mutableStateOf<String?>(null)
 
     val isThirdFormValid: Boolean
         get() = driversLicenseNumberError.value == null &&
+                selectedDateError.value == null &&
+                selectedDateMillis.value != null &&
+                selectedDriverLicenseImageUri.value != null &&
+                selectedProfileImageUri.value != null &&
+                selectedPassportImageUri.value != null &&
                 driversLicenseNumber.value.isNotBlank()
 
     fun onDriversLicenseNumberChange(newDriversLicenseNumber: String) {
@@ -23,6 +32,15 @@ class SignUpThirdViewModel : ViewModel() {
     fun onDateChanged(newDateValue: Long?) {
         selectedDateMillis.value = newDateValue
         selectedDateError.value = validateDate(newDateValue)
+    }
+    fun onDriverLicenseImageSelected(uri: Uri?) {
+        selectedDriverLicenseImageUri.value = uri
+    }
+    fun onProfileImageSelected(uri: Uri?) {
+        selectedProfileImageUri.value = uri
+    }
+    fun onPassportImageSelected(uri: Uri?) {
+        selectedPassportImageUri.value = uri
     }
 
     fun validateDriversLicenseNumber(value: String): String? {

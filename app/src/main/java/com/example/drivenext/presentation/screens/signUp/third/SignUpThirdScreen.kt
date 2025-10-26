@@ -1,5 +1,6 @@
 package com.example.drivenext.presentation.screens.signUp.third
 
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -7,7 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -16,6 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import coil.compose.rememberAsyncImagePainter
 
 import com.example.drivenext.R
 import com.example.drivenext.ui.theme.DriveNextTheme
@@ -30,6 +37,25 @@ fun SignUpThirdScreen(
     onBackButtonClick: () -> Unit,
     viewModel: SignUpThirdViewModel = viewModel()
 ) {
+    // image pickers
+    val pickProfileImageLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        viewModel.onProfileImageSelected(uri)
+    }
+
+    val pickDriverLicenseImageLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        viewModel.onDriverLicenseImageSelected(uri)
+    }
+
+    val pickPassportImageLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        viewModel.onPassportImageSelected(uri)
+    }
+
     // date of issue field
     val datePickerState = rememberDatePickerState()
     var showDatePickerDialog by rememberSaveable { mutableStateOf(false) }
@@ -73,7 +99,7 @@ fun SignUpThirdScreen(
                     .fillMaxWidth()
             ) {
                 IconButton(
-                    onClick = {}
+                    onClick = onBackButtonClick
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.back_button),
@@ -119,17 +145,30 @@ fun SignUpThirdScreen(
             verticalArrangement = Arrangement.Center
         ) {
 
-            IconButton(
-                onClick = onBackButtonClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .size(128.dp)
-            ) {
+            if (viewModel.selectedProfileImageUri.value != null) {
                 Image(
-                    painter = painterResource(R.drawable.new_profile_photo),
+                    painter = rememberAsyncImagePainter(viewModel.selectedProfileImageUri.value),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .clickable { pickProfileImageLauncher.launch("image/*") }
+                        .clip(CircleShape)
+                        .size(128.dp),
+                    contentScale = ContentScale.Crop
                 )
+            } else {
+                IconButton(
+                    onClick = { pickProfileImageLauncher.launch("image/*") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .size(128.dp)
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.new_profile_photo),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                    )
+                }
             }
 
             Text(
@@ -166,6 +205,8 @@ fun SignUpThirdScreen(
             Text(
                 text = stringResource(R.string.date_of_issue),
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(top = 16.dp)
             )
             OutlinedTextField(
                 value = formattedDate,
@@ -198,44 +239,70 @@ fun SignUpThirdScreen(
             Text(
                 text = stringResource(R.string.drivers_license_photo),
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(top = 24.dp)
             )
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(top = 8.dp, bottom = 16.dp)
+                    .padding(top = 8.dp)
+                    .clickable { pickDriverLicenseImageLauncher.launch("image/*") }
             ) {
-                Image(
-                    painter = painterResource(R.drawable.upload),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                )
+                if (viewModel.selectedDriverLicenseImageUri.value != null) {
+                    Image(
+                        painter = rememberAsyncImagePainter(viewModel.selectedDriverLicenseImageUri.value),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(R.drawable.upload),
+                        contentDescription = null,
+                        modifier = Modifier.size(64.dp)
+                    )
+                }
                 Text(
                     text = stringResource(R.string.upload_photo),
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = 8.dp)
+                    modifier = Modifier.padding(start = 8.dp)
                 )
             }
 
             Text(
                 text = stringResource(R.string.passport_photo),
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(top = 24.dp)
             )
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(top = 8.dp)
+                    .padding(top = 8.dp, bottom = 16.dp)
+                    .clickable { pickPassportImageLauncher.launch("image/*") }
             ) {
-                Image(
-                    painter = painterResource(R.drawable.upload),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                )
+                if (viewModel.selectedPassportImageUri.value != null) {
+                    Image(
+                        painter = rememberAsyncImagePainter(viewModel.selectedPassportImageUri.value),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(R.drawable.upload),
+                        contentDescription = null,
+                        modifier = Modifier.size(64.dp)
+                    )
+                }
                 Text(
                     text = stringResource(R.string.upload_photo),
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = 8.dp)
+                    modifier = Modifier.padding(start = 8.dp)
                 )
             }
         }

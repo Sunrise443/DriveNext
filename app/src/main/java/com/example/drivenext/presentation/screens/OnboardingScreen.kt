@@ -86,7 +86,7 @@ fun OnboardingScreen(
                 Image(
                     painter = painterResource(imageResources[page]),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.FillHeight,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(307.dp)
