@@ -3,6 +3,7 @@ package com.example.drivenext.presentation.screens.signUp.second
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.drivenext.presentation.screens.signUp.SharedSignUpViewModel
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
@@ -30,13 +31,16 @@ class SignUpSecondViewModel : ViewModel() {
         surname.value = newSurnameValue
         surnameError.value = validateSurname(newSurnameValue)
     }
+
     fun onNameChanged(newNameValue: String) {
         name.value = newNameValue
         nameError.value = validateName(newNameValue)
     }
+
     fun onGenderChanged(newGenderValue: Gender) {
         gender.value = newGenderValue
     }
+
     fun onDateChanged(newDateValue: Long?) {
         selectedDateMillis.value = newDateValue
         selectedDateError.value = validateDate(newDateValue)
@@ -45,9 +49,11 @@ class SignUpSecondViewModel : ViewModel() {
     fun validateSurname(value: String): String? {
         return if (value.isBlank()) "Введите фамилию" else null
     }
+
     fun validateName(value: String): String? {
         return if (value.isBlank()) "Введите имя" else null
     }
+
     fun validateDate(value: Long?): String? {
         if (value == null) return "Введите дату рождения."
         val selectedDate = Date(value)
@@ -65,10 +71,20 @@ class SignUpSecondViewModel : ViewModel() {
         }
     }
 
-    fun onSecondContinueClick(onSuccess: () -> Unit) {
+    fun onSecondContinueClick(
+        onSuccess: () -> Unit,
+        sharedSignUpViewModel: SharedSignUpViewModel,
+        patronymic: String?
+    ) {
         viewModelScope.launch {
             if (isSecondFormValid) {
-                // TODO server request
+                sharedSignUpViewModel.savePersonalInfo(
+                    name.value,
+                    surname.value,
+                    patronymic,
+                    selectedDateMillis.value.toString(),
+                    gender.value.toString()
+                )
                 onSuccess()
             }
         }

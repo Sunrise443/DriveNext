@@ -3,6 +3,8 @@ package com.example.drivenext.presentation.screens.signUp.first
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.drivenext.presentation.screens.signUp.SharedSignUpViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class SignUpFirstViewModel : ViewModel() {
@@ -64,10 +66,10 @@ class SignUpFirstViewModel : ViewModel() {
         return if (value) null else "Необходимо согласиться с условиями обслуживания и политикой конфиденциальности."
     }
 
-    fun onFirstContinueClick(onSuccess: () -> Unit) {
+    fun onFirstContinueClick(onSuccess: () -> Unit, sharedSignUpViewModel: SharedSignUpViewModel) {
         viewModelScope.launch {
             if (isFirstFormValid) {
-                // TODO server request
+                sharedSignUpViewModel.saveEmailAndPassword(email.value, password.value)
                 onSuccess()
             }
         }

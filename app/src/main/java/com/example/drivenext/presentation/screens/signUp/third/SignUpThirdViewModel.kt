@@ -3,6 +3,9 @@ package com.example.drivenext.presentation.screens.signUp.third
 import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.drivenext.presentation.screens.signUp.SharedSignUpViewModel
+import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 
@@ -61,6 +64,24 @@ class SignUpThirdViewModel : ViewModel() {
             "Введите корректную дату выдачи."
         } else {
             null
+        }
+    }
+
+    fun onThirdContinueClick(
+        onSuccess: () -> Unit,
+        sharedSignUpViewModel: SharedSignUpViewModel,
+
+    ) {
+        viewModelScope.launch {
+            if (isThirdFormValid) {
+                sharedSignUpViewModel.saveLicenseInfo(
+                    number = driversLicenseNumber.value,
+                    issueDate = selectedDateMillis.value
+                )
+                sharedSignUpViewModel.submitUser()
+                println("FINISHED")
+                onSuccess()
+            }
         }
     }
 }

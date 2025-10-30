@@ -9,20 +9,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
 import com.example.drivenext.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.drivenext.ui.theme.DriveNextTheme
+import com.example.drivenext.presentation.screens.signUp.SharedSignUpViewModel
 
 @Composable
 fun SignUpFirstScreen(
     onNextButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
+    sharedSignUpViewModel: SharedSignUpViewModel,
     viewModel: SignUpFirstViewModel = viewModel()
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
@@ -60,7 +59,7 @@ fun SignUpFirstScreen(
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = {viewModel.onFirstContinueClick(onNextButtonClick)},
+                onClick = {viewModel.onFirstContinueClick(onNextButtonClick, sharedSignUpViewModel)},
                 enabled = viewModel.isFirstFormValid,
             ) {
                 Text(
@@ -198,16 +197,5 @@ fun SignUpFirstScreen(
             }
         }
 
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SignUpFirstScreenPreview() {
-    DriveNextTheme {
-        SignUpFirstScreen(
-            onNextButtonClick = {},
-            onBackButtonClick = {},
-        )
     }
 }

@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -23,9 +22,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import coil.compose.rememberAsyncImagePainter
-
 import com.example.drivenext.R
-import com.example.drivenext.ui.theme.DriveNextTheme
+import com.example.drivenext.presentation.screens.signUp.SharedSignUpViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -35,6 +33,7 @@ import java.util.Locale
 fun SignUpThirdScreen(
     onNextButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
+    sharedSignUpViewModel: SharedSignUpViewModel,
     viewModel: SignUpThirdViewModel = viewModel()
 ) {
     // image pickers
@@ -124,7 +123,7 @@ fun SignUpThirdScreen(
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
                 enabled = viewModel.isThirdFormValid,
-                onClick = onNextButtonClick,
+                onClick = { viewModel.onThirdContinueClick(onNextButtonClick, sharedSignUpViewModel) },
             ) {
                 Text(
                     text = stringResource(R.string.countinue),
@@ -310,13 +309,3 @@ fun SignUpThirdScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SignUpThirdScreenPreview() {
-    DriveNextTheme {
-        SignUpThirdScreen(
-            onNextButtonClick = {},
-            onBackButtonClick = {},
-        )
-    }
-}

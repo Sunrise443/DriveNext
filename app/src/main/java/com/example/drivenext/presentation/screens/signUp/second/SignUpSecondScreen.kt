@@ -12,12 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.drivenext.R
-import com.example.drivenext.ui.theme.DriveNextTheme
+import com.example.drivenext.presentation.screens.signUp.SharedSignUpViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -31,6 +30,7 @@ enum class Gender {
 fun SignUpSecondScreen(
     onNextButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
+    sharedSignUpViewModel: SharedSignUpViewModel,
     viewModel: SignUpSecondViewModel = viewModel()
 ) {
     var patronymic by remember { mutableStateOf("") }
@@ -101,7 +101,7 @@ fun SignUpSecondScreen(
                     .padding(horizontal = 8.dp, vertical = 24.dp)
                     .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = { viewModel.onSecondContinueClick(onNextButtonClick) },
+                onClick = { viewModel.onSecondContinueClick(onNextButtonClick, sharedSignUpViewModel, patronymic) },
                 enabled = viewModel.isSecondFormValid,
             ) {
                 Text(
@@ -249,13 +249,3 @@ fun SignUpSecondScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SignUpSecondScreenPreview() {
-    DriveNextTheme {
-        SignUpSecondScreen(
-            onNextButtonClick = {},
-            onBackButtonClick = {},
-        )
-    }
-}

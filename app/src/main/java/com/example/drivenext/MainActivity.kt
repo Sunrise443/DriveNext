@@ -12,14 +12,26 @@ import com.example.drivenext.ui.theme.DriveNextTheme
 import com.example.drivenext.core.Route
 import com.example.drivenext.presentation.screens.*
 import com.example.drivenext.presentation.screens.login.LoginScreen
+import com.example.drivenext.presentation.screens.signUp.SharedSignUpViewModel
 import com.example.drivenext.presentation.screens.signUp.first.SignUpFirstScreen
 import com.example.drivenext.presentation.screens.signUp.fourth.SignUpFourthScreen
 import com.example.drivenext.presentation.screens.signUp.second.SignUpSecondScreen
 import com.example.drivenext.presentation.screens.signUp.third.SignUpThirdScreen
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
 
+val supabase = createSupabaseClient(
+
+    // DO NOT SAVE TO GIT
+    supabaseUrl = "https://ecgpouokhnxcrbrdyszj.supabase.co",
+) {
+    install(Postgrest)
+}
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedSignUpViewModel = SharedSignUpViewModel()
 
         enableEdgeToEdge()
         setContent {
@@ -69,21 +81,24 @@ class MainActivity : ComponentActivity() {
                     composable<Route.SignUpFirstScreen> {
                         SignUpFirstScreen(
                             onNextButtonClick = { navController.navigate(Route.SignUpSecondScreen) },
-                            onBackButtonClick = { navController.navigate(Route.GettingStartedScreen) }
+                            onBackButtonClick = { navController.navigate(Route.GettingStartedScreen) },
+                            sharedSignUpViewModel
                         )
                     }
 
                     composable<Route.SignUpSecondScreen> {
                         SignUpSecondScreen(
                             onNextButtonClick = { navController.navigate(Route.SignUpThirdScreen) },
-                            onBackButtonClick = { navController.navigate(Route.SignUpFirstScreen) }
+                            onBackButtonClick = { navController.navigate(Route.SignUpFirstScreen) },
+                            sharedSignUpViewModel
                         )
                     }
 
                     composable<Route.SignUpThirdScreen> {
                         SignUpThirdScreen(
                             onNextButtonClick = { navController.navigate(Route.SignUpFourthScreen) },
-                            onBackButtonClick = { navController.navigate(Route.SignUpSecondScreen) }
+                            onBackButtonClick = { navController.navigate(Route.SignUpSecondScreen) },
+                            sharedSignUpViewModel
                         )
                     }
 
