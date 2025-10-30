@@ -8,9 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.drivenext.ui.theme.DriveNextTheme
-
 import com.example.drivenext.core.Route
 import com.example.drivenext.presentation.screens.*
+import com.example.drivenext.presentation.screens.homepage.HomepageScreen
 import com.example.drivenext.presentation.screens.login.LoginScreen
 import com.example.drivenext.presentation.screens.signUp.SharedSignUpViewModel
 import com.example.drivenext.presentation.screens.signUp.first.SignUpFirstScreen
@@ -27,6 +27,7 @@ val supabase = createSupabaseClient(
 ) {
     install(Postgrest)
 }
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             DriveNextTheme {
                 val navController = rememberNavController()
-                NavHost (
+                NavHost(
                     navController = navController,
                     startDestination = Route.LoadingSplashScreen
                 ) {
@@ -56,10 +57,10 @@ class MainActivity : ComponentActivity() {
                     composable<Route.OnboardingScreen> {
                         OnboardingScreen(
                             onLetsGoButtonClick = {
-                                navController.navigate(Route.GettingStartedScreen)
+                                navController.navigate(Route.HomepageScreen)
                             },
                             onSkipButtonClick = {
-                                navController.navigate(Route.LoginScreen)
+                                navController.navigate(Route.HomepageScreen)
                             }
                         )
                     }
@@ -105,6 +106,39 @@ class MainActivity : ComponentActivity() {
                     composable<Route.SignUpFourthScreen> {
                         SignUpFourthScreen(
                             onNextButtonClick = { navController.navigate(Route.OnboardingScreen) }
+                        )
+                    }
+
+                    composable<Route.HomepageScreen> {
+                        HomepageScreen(
+                            onHomeScreenClick = { navController.navigate(Route.HomepageScreen) },
+                            onFavoritesClick = {},
+                            onSettingsClick = { navController.navigate(Route.SettingsScreen) },
+                        )
+                    }
+
+                    composable<Route.SearchResultScreen> {
+                        SearchResultScreen(
+                            onHomeScreenClick = { navController.navigate(Route.HomepageScreen) },
+                            onFavoritesClick = {},
+                            onSettingsClick = { navController.navigate(Route.SettingsScreen) },
+                        )
+                    }
+
+                    composable<Route.SettingsScreen> {
+                        SettingsScreen(
+                            onProfileCLick = { navController.navigate(Route.ProfileScreen) },
+                            onHomeScreenClick = { navController.navigate(Route.HomepageScreen) },
+                            onFavoritesClick = {},
+                            onSettingsClick = { navController.navigate(Route.SettingsScreen) },
+                        )
+                    }
+
+                    composable<Route.ProfileScreen> {
+                        ProfileScreen(
+                            onHomeScreenClick = { navController.navigate(Route.HomepageScreen) },
+                            onFavoritesClick = {},
+                            onSettingsClick = { navController.navigate(Route.SettingsScreen) },
                         )
                     }
                 }

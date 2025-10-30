@@ -20,11 +20,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.drivenext.R
+import com.example.drivenext.presentation.screens.components.BottomNavBar
 import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable
 fun ProfileScreen(
-//    navController: NavController,
+    onHomeScreenClick: () -> Unit = {},
+    onFavoritesClick: () -> Unit = {},
+    onSettingsClick: () -> Unit = {},
 ) {
     Scaffold(
         modifier = Modifier
@@ -41,44 +44,7 @@ fun ProfileScreen(
         },
 
         bottomBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier
-                        .padding(horizontal = 15.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.home_button),
-                        contentDescription = null
-                    )
-                }
-
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier
-                        .padding(horizontal = 15.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.bookmark_button),
-                        contentDescription = null,
-                    )
-                }
-
-                IconButton(
-                    onClick = { },
-                    modifier = Modifier
-                        .padding(horizontal = 15.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.settings_button),
-                        contentDescription = null,
-                    )
-                }
-            }
+            BottomNavBar(onHomeScreenClick, onFavoritesClick, onSettingsClick)
         },
     ) { innerPadding ->
         Column(

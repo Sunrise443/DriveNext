@@ -8,8 +8,8 @@ data class CarDto(
     val id: Int,
     val name: String,
     val brand: String,
-    val picture: String,
-    @SerialName("daily_price") val dailyPrice: String,
+    val picture: String? = null,
+    @SerialName("daily_price") val dailyPrice: Int,
     @SerialName("gearbox_type") val gearboxType: String,
     @SerialName("fuel_type") val fuelType: String,
 )

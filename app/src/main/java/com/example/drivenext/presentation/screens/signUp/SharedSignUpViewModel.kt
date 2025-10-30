@@ -40,7 +40,6 @@ class SharedSignUpViewModel() : ViewModel() {
         viewModelScope.launch {
             try {
                 val user = UserDto(
-                    id = 1,
                     email = email,
                     password = password,
                     name = name,

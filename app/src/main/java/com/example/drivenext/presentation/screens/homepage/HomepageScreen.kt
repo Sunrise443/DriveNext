@@ -1,9 +1,11 @@
-package com.example.drivenext.presentation.screens
+package com.example.drivenext.presentation.screens.homepage
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -15,58 +17,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.drivenext.R
+import com.example.drivenext.presentation.screens.components.BottomNavBar
 import com.example.drivenext.presentation.screens.components.CarCard
-import com.example.drivenext.ui.theme.DriveNextTheme
 
 @Composable
 fun HomepageScreen(
-//    navController: NavController,
+    viewModel: HomeViewModel = viewModel(),
+    onHomeScreenClick: () -> Unit = {},
+    onFavoritesClick: () -> Unit = {},
+    onSettingsClick: () -> Unit = {},
 ) {
+    val cars = viewModel.cars
+    val isLoading = viewModel.isLoading.value
+
     Scaffold(
         modifier = Modifier
             .systemBarsPadding(),
 
         bottomBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier
-                        .padding(horizontal = 15.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.home_button),
-                        contentDescription = null
-                    )
-                }
-
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier
-                        .padding(horizontal = 15.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.bookmark_button),
-                        contentDescription = null,
-                    )
-                }
-
-                IconButton(
-                    onClick = { },
-                    modifier = Modifier
-                        .padding(horizontal = 15.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.settings_button),
-                        contentDescription = null,
-                    )
-                }
-            }
+            BottomNavBar(onHomeScreenClick, onFavoritesClick, onSettingsClick)
         },
     ) { innerPadding ->
         Column(
@@ -105,21 +76,19 @@ fun HomepageScreen(
                         .fillMaxWidth(),
                 )
             }
-            LazyColumn(
-                content = {
-                    items(12) { item ->
-                        CarCard()
+
+            if (isLoading) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            } else {
+                LazyColumn {
+                    items(cars) { car ->
+                        CarCard(car)
                     }
                 }
-            )
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HomepageScreenPreview() {
-    DriveNextTheme {
-        HomepageScreen()
-    }
-}

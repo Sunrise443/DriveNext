@@ -42,12 +42,12 @@ fun LoadingSplashScreen(
             }
         } else if (!token.isNullOrEmpty()) {
             navController.navigate(Route.GettingStartedScreen) {
-                popUpTo(Route.LoadingSplashScreen) {inclusive = true}
+                popUpTo(Route.LoadingSplashScreen) { inclusive = true }
             }
         } else {
             // TODO navigate to the main screen
             navController.navigate(Route.GettingStartedScreen) {
-                popUpTo(Route.LoadingSplashScreen) {inclusive = true}
+                popUpTo(Route.LoadingSplashScreen) { inclusive = true }
             }
         }
     }
