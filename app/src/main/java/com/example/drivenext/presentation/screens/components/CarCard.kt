@@ -105,11 +105,12 @@ fun CarCard(car: CarDto) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp)
         ) {
             Button(
                 onClick = { },
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3E1369))
             ) {
@@ -118,7 +119,9 @@ fun CarCard(car: CarDto) {
 
             OutlinedButton(
                 onClick = {},
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp),
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(1.dp, Color(0xFF3E1369)),
             ) {

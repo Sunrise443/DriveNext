@@ -10,7 +10,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.drivenext.ui.theme.DriveNextTheme
 import com.example.drivenext.core.Route
 import com.example.drivenext.presentation.screens.*
+import com.example.drivenext.presentation.screens.homepage.HomeViewModel
 import com.example.drivenext.presentation.screens.homepage.HomepageScreen
+import com.example.drivenext.presentation.screens.homepage.SearchResultScreen
 import com.example.drivenext.presentation.screens.login.LoginScreen
 import com.example.drivenext.presentation.screens.signUp.SharedSignUpViewModel
 import com.example.drivenext.presentation.screens.signUp.first.SignUpFirstScreen
@@ -33,6 +35,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val sharedSignUpViewModel = SharedSignUpViewModel()
+        val homepageViewModel = HomeViewModel()
 
         enableEdgeToEdge()
         setContent {
@@ -111,14 +114,19 @@ class MainActivity : ComponentActivity() {
 
                     composable<Route.HomepageScreen> {
                         HomepageScreen(
+                            homepageViewModel,
                             onHomeScreenClick = { navController.navigate(Route.HomepageScreen) },
                             onFavoritesClick = {},
                             onSettingsClick = { navController.navigate(Route.SettingsScreen) },
+                            loadResultScreen = { navController.navigate(Route.SearchResultScreen) },
+                            onDataLoading = { navController.navigate(Route.CarSearchLoadingScreen) }
                         )
                     }
 
                     composable<Route.SearchResultScreen> {
                         SearchResultScreen(
+                            homepageViewModel,
+                            onBackButtonClick = { navController.navigate(Route.HomepageScreen) },
                             onHomeScreenClick = { navController.navigate(Route.HomepageScreen) },
                             onFavoritesClick = {},
                             onSettingsClick = { navController.navigate(Route.SettingsScreen) },
@@ -140,6 +148,10 @@ class MainActivity : ComponentActivity() {
                             onFavoritesClick = {},
                             onSettingsClick = { navController.navigate(Route.SettingsScreen) },
                         )
+                    }
+
+                    composable<Route.CarSearchLoadingScreen> {
+                        CarSearchLoadingScreen()
                     }
                 }
             }

@@ -2,10 +2,8 @@ package com.example.drivenext.presentation.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -54,30 +52,27 @@ fun SettingsScreen(
         ) {
             Row(
                 modifier = Modifier
-                    .clickable { onProfileCLick }
+                    .clickable { onProfileCLick() }
                     .padding(bottom = 20.dp)
                     .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(
-                    onClick = { },
+
+                Icon(
+                    painter = painterResource(R.drawable.no_profile_picture_icon),
+                    contentDescription = null,
                     modifier = Modifier
-                        .padding(end = 15.dp)
-                        .size(67.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.no_profile_picture_icon),
-                        contentDescription = null,
-                    )
-                }
+                        .padding(end = 10.dp)
+                )
+
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        text = "ИМЯ ПОЛЬЗОВАТЕЛЯ ТУТ"
+                        text = "Silly Dummy DumDum"
                     )
                     Text(
-                        text = "ТУТ ЕМЕЙЛ ПОЛЬЬЗОВАТЕЛЯ"
+                        text = "mymy@gmail.com"
                     )
                 }
                 Icon(

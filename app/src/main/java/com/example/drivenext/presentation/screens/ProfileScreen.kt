@@ -3,9 +3,7 @@ package com.example.drivenext.presentation.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -69,13 +67,13 @@ fun ProfileScreen(
 
 
             Text(
-                text = "Иван Иванов",
+                text = "Silly Dummy",
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
 
             Text(
-                text = "Присоединился вчера",
+                text = "Присоединился в октябре 2025",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 20.dp),
@@ -94,7 +92,7 @@ fun ProfileScreen(
                         text = "Электронная почта",
                     )
                     Text(
-                        text = "ТУТ ЭЛ ПОЧТА СЕРЫМ",
+                        text = "mymy@gmail.com",
                     )
                 }
 
@@ -144,7 +142,7 @@ fun ProfileScreen(
                         text = "Пол",
                     )
                     Text(
-                        text = "ТУТ ПОЛ СЕРЫМ",
+                        text = "Женский",
                     )
                 }
 
@@ -169,7 +167,7 @@ fun ProfileScreen(
                         text = "Google",
                     )
                     Text(
-                        text = "ТУТ ЭЛ ПОЧТА СЕРЫМ",
+                        text = "mymy@gmail.com",
                     )
                 }
 

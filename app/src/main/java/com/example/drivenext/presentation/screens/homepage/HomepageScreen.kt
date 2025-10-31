@@ -28,6 +28,8 @@ fun HomepageScreen(
     onHomeScreenClick: () -> Unit = {},
     onFavoritesClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
+    loadResultScreen: () -> Unit = {},
+    onDataLoading: () -> Unit = {}
 ) {
     val cars = viewModel.cars
     val isLoading = viewModel.isLoading.value
@@ -47,23 +49,29 @@ fun HomepageScreen(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Column (
+            Column(
                 modifier = Modifier
                     .padding(20.dp)
             ) {
                 OutlinedTextField(
-                    value = "",
-                    onValueChange = { },
+                    value = viewModel.searchQuery.value,
+                    onValueChange = { viewModel.searchQuery.value = it },
+
                     placeholder = { Text("Выберите марку автомобиля") },
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
+
                     leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.search_icon),
-                            contentDescription = null,
-                        )
+                        IconButton(
+                            onClick = { viewModel.onSearchClick(loadResultScreen, onDataLoading) }
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.search_icon),
+                                contentDescription = null,
+                            )
+                        }
                     }
                 )
 
